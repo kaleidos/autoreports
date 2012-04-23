@@ -211,11 +211,11 @@ class ReportAdmin(ReportApi):
 
         try:
             try:
-                cl = ChangeList(request, self.model, self.list_display, self.list_display_links, self.list_filter,
-                    self.date_hierarchy, self.search_fields, self.list_select_related, self.list_per_page, self)
+                cl = ChangeList(request, self.model, self.list_display, self.list_display_links, self.list_filter, self.date_hierarchy,
+                        self.search_fields, self.list_select_related, self.list_per_page, self.list_max_show_all, self.list_editable, self)
             except TypeError:
-                cl = ChangeList(request, self.model, self.list_display, self.list_display_links, self.list_filter,
-                    self.date_hierarchy, self.search_fields, self.list_select_related, self.list_per_page, self.list_editable, self)
+                cl = ChangeList(request, self.model, self.list_display, self.list_display_links, self.list_filter, self.date_hierarchy,
+                        self.search_fields, self.list_select_related, self.list_per_page, self.list_max_show_all, self.list_editable, self)
             headers = list(result_headers(cl))
             j = 0
             for i, header in enumerate(headers):
