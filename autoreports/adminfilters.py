@@ -1,4 +1,4 @@
-from django.contrib.admin.filterspecs import FilterSpec, RelatedFilterSpec
+from django.contrib.admin.filters import ListFilter, RelatedFieldListFilter
 from django.core.exceptions import FieldError
 from django.http import Http404
 from django.utils.datastructures import MultiValueDict
@@ -194,9 +194,9 @@ class QueryStringManager(object):
         return bool(self.filters) or bool(self.excluders) or bool(self.search_fields)
 
 
-class FieldAvailabilityValueFilterSpec(FilterSpec):
+class FieldAvailabilityValueListFilter(ListFilter):
     def __init__(self, f, request, params, model, model_admin):
-        super(FieldAvailabilityValueFilterSpec, self).__init__(f, request, params, model, model_admin)
+        super(FieldAvailabilityValueListFilter, self).__init__(f, request, params, model, model_admin)
         self.lookup_kwarg = '%s__isnull' % f.name
         self.lookup_val = request.GET.get(self.lookup_kwarg, None)
 
@@ -210,17 +210,17 @@ class FieldAvailabilityValueFilterSpec(FilterSpec):
                    'display': k}
 
 
-class MultipleRelatedFilterSpec(RelatedFilterSpec):
+class MultipleRelatedFieldListFilter(RelatedFieldListFilter):
     """
-    FilterSpec encapsulates the logic for displaying filters in the Django admin.
+    ListFilter encapsulates the logic for displaying filters in the Django admin.
     Filters are specified in models with the "list_filter" option.
 
-    MultipleRelatedFilterSpec can specify foofield__id__in=[1,2,3] filters.
+    MultipleRelatedFieldListFilter can specify foofield__id__in=[1,2,3] filters.
     It depends on use of MultiQueryStringManager to work.
 
     """
     def __init__(self, f, request, params, model, model_admin, choices_queryset=None):
-        super(MultipleRelatedFilterSpec, self).__init__(f, request, params, model, model_admin)
+        super(MultipleRelatedFieldListFilter, self).__init__(f, request, params, model, model_admin)
         self.lookup_kwarg = '%s__%s__in' % (f.name, f.rel.to._meta.pk.name)
         self.lookup_val = request.GET.getlist(self.lookup_kwarg)
         if choices_queryset is not None:

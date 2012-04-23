@@ -82,6 +82,7 @@ class ReportAdmin(ReportApi):
         search_fields = cl_options.get('search_fields', tuple())
         list_select_related = cl_options.get('list_select_related', self.list_select_related)
         list_per_page = cl_options.get('list_per_page', self.list_per_page)
+        list_max_show_all = cl_options.get('list_max_show_all', self.list_max_show_all)
         list_editable = cl_options.get('list_editable', getattr(self, 'list_editable', None))
         prefix_url = cl_options.get('prefix_url', '../../')
         model_admin = self
@@ -89,12 +90,12 @@ class ReportAdmin(ReportApi):
             model_admin = admin.site._registry[model]
         try:
             cl = AutoReportChangeList(request, model, prefix_url, report, list_display, list_display_links, list_filter,
-                date_hierarchy, search_fields, list_select_related, list_per_page, list_editable, model_admin)
+                date_hierarchy, search_fields, list_select_related, list_per_page, list_max_show_all, list_editable, model_admin)
             cl.formset = None
             return cl
         except TypeError:
             return AutoReportChangeList(request, model, prefix_url, report, list_display, list_display_links, list_filter,
-                date_hierarchy, search_fields, list_select_related, list_per_page, model_admin)
+                date_hierarchy, search_fields, list_select_related, list_per_page, list_max_show_all, list_editable, model_admin)
 
     def _get_extra_context_fake_change_list(self, model, request, extra_context=None, cl_options=None, report=None):
         extra_context = extra_context or {}
@@ -106,7 +107,7 @@ class ReportAdmin(ReportApi):
             'title': cl.title,
             'is_popup': cl.is_popup,
             'cl': cl,
-            'root_path': self.admin_site.root_path,
+            #'root_path': self.admin_site.root_path,
             'app_label': app_label,
             'opts': self.opts,
             'has_add_permission': False,

@@ -7,7 +7,7 @@
 
 {% block extrahead %}
     {{ block.super }}
-    <link href="{{ MEDIA_URL }}autoreports/wizard.css" type="text/css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}autoreports/wizard.css" type="text/css" rel="stylesheet">
     {% include "autoreports/inc.medialibraries.html" %}
     <script type="text/javascript">
         {% if report %}
@@ -232,6 +232,7 @@
             {% endif %}
         {% endblock %}
         <form action="." method="post" class="report">
+            {% csrf_token %}
             <div class="app_label" style="display:none">{{ app_label }}</div>
             <div class="module_name" style="display:none">{{ module_name }}</div>
             {% block contentform %}

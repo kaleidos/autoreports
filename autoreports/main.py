@@ -14,8 +14,8 @@ class AutoReportChangeList(ChangeList):
         self.report = report
         super(AutoReportChangeList, self).__init__(self.request_lite, model, *args, **kwargs)
 
-    def get_query_set(self):
-        query_set = super(AutoReportChangeList, self).get_query_set()
+    def get_query_set(self, request):
+        query_set = super(AutoReportChangeList, self).get_query_set(request)
         try:
             filters, query_set = filtering_from_request(self.request, query_set, report=self.report)
             self._adavanced_filters = filters
