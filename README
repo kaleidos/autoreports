@@ -42,16 +42,6 @@ In your urls.py
         #...#
     )
 
-Media files
------------
-
-Link the media files in your project media directory
-
-::
-
-    cd {{ MEDIA_ROOT }}
-    ln -s {{ AUTOREPORTS_FORM_PATH }}media/ autoreports
-
 
 In the admin site (from Advanced usage)
 ----------------------------------------
@@ -163,11 +153,10 @@ You can set some settings and autoreports adapt itself:
  * AUTOREPORTS_WIZARDFIELD = 'myappreport.wizards.MyWizardField' # If you want change the WizardField
 
 
-Development
-===========
+Upstream Development
+====================
 
-You can get the last bleeding edge version of autoreports by doing a checkout
-of its subversion repository::
+You can get the last bleeding edge upstream version of autoreports by doing a
+checkout of its subversion repository::
 
   svn co http://svnpub.yaco.es/djangoapps/autoreports/trunk/autoreports
-
